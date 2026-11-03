@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.env
+*.db
+node_modules/
+frontend/dist/
+Task-Claude.docx
+prompt.txt

@@ -1,0 +1,23 @@
+# Render Blueprint: New > Blueprint > pick this repo. Fill the "sync: false" values when prompted.
+services:
+  - type: web
+    name: verdant-support
+    runtime: docker
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase: { name: verdant-db, property: connectionString }
+      - key: TOGETHER_API_KEY
+        sync: false
+      - key: WEBHOOK_SECRET
+        sync: false
+      - key: AGENT_SEED_EMAIL
+        sync: false
+      - key: AGENT_SEED_PASSWORD
+        sync: false
+      - key: COOKIE_SECURE
+        value: "true"
+databases:
+  - name: verdant-db
+    plan: free

@@ -1,0 +1,23 @@
+# Local run with Postgres:  docker compose up --build   ->  http://localhost:8000
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: verdant
+      POSTGRES_PASSWORD: verdant
+      POSTGRES_DB: verdant
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "verdant"]
+      interval: 2s
+      retries: 20
+  app:
+    build: .
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql://verdant:verdant@db:5432/verdant
+    ports: ["8000:8000"]
+    depends_on:
+      db: { condition: service_healthy }
+volumes:
+  pgdata:
